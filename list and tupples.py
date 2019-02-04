@@ -56,8 +56,12 @@
 # print("1 \n 2 \n 3 \n 4 \n 5")
 # for i in range(1,100):
 #     print(i)
-name = input("Enter your name: ")
-while name.isalpha() == False:
-    print("invalid name...")
-    name = input("Enter your name again: ")
-print("Welcome "+name)
+# name = input("Enter your name: ")
+# while name.isalpha() == False or len(name) < 3:
+#     print("invalid name...")
+#     name = input("Enter your name again: ")
+# print("Welcome "+name)
+
+# menu based program
+# leap year
+
