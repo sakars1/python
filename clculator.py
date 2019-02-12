@@ -1,5 +1,4 @@
-number1 = 0
-
+global ch = 0
 def add_num(number1,number2):
     return number1 + number2
 
@@ -17,7 +16,8 @@ def get_inp():
     print("2. SUB")
     print("3. MUL")
     print("4. EXIT")
-    ch = int(input("Enter your choice from 0 to 4: "))
+    global ch = int(input("Enter your choice from 0 to 4: "))
+    print(ch)
 
 while 1:
     get_inp()
@@ -33,3 +33,4 @@ while 1:
     else:
         print("Exiting...")
         break
+print(ch)
