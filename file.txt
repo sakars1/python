@@ -1,2 +1,3 @@
-Hello world from file 
- this is second linegit
+hello
+im on a python console
+this text is from user input
