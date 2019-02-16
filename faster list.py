@@ -29,3 +29,6 @@ num=[1,2,332,4,4,7,9,80,980,43,5,8,6,7]
 lst = list(filter(is_even,num))
 print(lst)
 
+lst_comp = [x for x in range(2500) if not [y for y in range(2,x) if x%y==0]]
+print(lst_comp)
+
