@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+   <body>
+      <h3>Students - Flask SQLAlchemy example</h3>
+      <hr/>
+
+      {%- for category, message in get_flashed_messages(with_categories = true) %}
+         <div class = "alert alert-danger">
+            {{ message }}
+         </div>
+      {%- endfor %}
+
+      <form action = "{{ request.path }}" method = "post">
+         <label for = "date_occurred">Date Occurred</label><br>
+         <input type = "text" id="date_occurred" name = "date_occurred" placeholder = "Enter date of crime" /><br>
+          <label for = "date_reported">Date Reported</label><br>
+         <input type = "text" id="date_reported" name = "date_reported" placeholder = "Enter reported date" /><br>
+         <label for = "time_occurred">Time Of Crime</label><br>
+         <input type = "text"  id="time_occurred" name = "time_occurred" placeholder = "Enter time of crime" /><br>
+         <label for = "crime_type">Type Of Crime</label><br>
+         <input type = "text"  id="crime_type" name = "crime_type" placeholder = "Enter type of crime" /><br>
+         <label for = "crime_loc">Crime Location</label><br>
+         <input type = "text"  id="crime_loc" name = "crime_loc" placeholder = "Enter location of crime" /><br>
+          <label for = "crime_loc_long">Longitude</label><br>
+         <input type = "text"  id="crime_loc_long" name = "crime_loc_long" placeholder = "Enter longitude" /><br>
+          <label for = "crime_loc_lat">Latitude</label><br>
+         <input type = "text"  id="crime_loc_lat" name = "crime_loc_lat" placeholder = "Enter latitude" /><br>
+         <input type = "submit" value = "Submit" />
+      </form>
+   </body>
+</html>

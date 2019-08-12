@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head>
+      <style>
+         th,td{
+            padding:10px 20px;
+         }
+      </style>
+   </head>
+   <body>
+      <h3>
+         <a href = "{{ url_for('show_all') }}">Comments - Flask
+            SQLAlchemy example</a>
+      </h3>
+
+      <hr/>
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+
+
+      <table>
+         <thead>
+            <tr>
+               <th>Sn.</th>
+               <th>Date Occurred</th>
+               <th>Date Reported</th>
+               <th>Time</th>
+               <th>Crime Type</th>
+               <th>Loc</th>
+               <th>long.</th>
+               <th>lat.</th>
+            </tr>
+         </thead>
+
+         <tbody>
+            {% for crime in crime_res %}
+               <tr>
+                  <td>{{ crime.sn }}</td>
+                  <td>{{ crime.date_occr }}</td>
+                  <td>{{ crime.date_rep }}</td>
+                  <td>{{ crime.time_occr }}</td>
+                  <td>{{ crime.crime_type }}</td>
+                  <td>{{ crime.loc }}</td>
+                  <td>{{ crime.loc_long }}</td>
+                  <td>{{ crime.loc_lat }}</td>
+               </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+   </body>
+</html>
