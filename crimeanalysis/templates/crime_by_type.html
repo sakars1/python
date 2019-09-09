@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang = "en">
+   <head>
+
+
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+      <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFENn6BDI_2mw1uagyDxVa-RxyYK2n83U&callback=initMap" type="text/javascript"></script>-->
+        <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>-->
+      <style>
+
+         <!--#myChart{-->
+            <!--width:500px !important;-->
+            <!--height:400px !important;-->
+         <!--}-->
+      </style>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+   </head>
+   <body>
+
+      {%- for message in get_flashed_messages() %}
+         {{ message }}
+      {%- endfor %}
+
+      {% set labels = ['murder','rape','robbery','violence','kidnapping'] %}
+      {% set crime_counts = [] %}
+      {% for crime_count in crime_by_type %}
+        {% if crime_counts.append(crime_count[1]) %}{% endif %}
+      {% endfor %}
+
+   <div style="width:800px;margin:20px auto;">
+      <canvas id="myChart" width="500" height="300"></canvas>
+   </div>
+    <!--<div id="map" style="height:500px"></div>-->
+<script>
+var ctx = document.getElementById('myChart').getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ labels | safe }},
+        datasets: [{
+            label: 'No of crimes by crime types',
+            data: {{ crime_counts }},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>
+<!--<script type="text/javascript">-->
+         <!--var map;-->
+<!--function initMap() {-->
+        <!--map = new google.maps.Map(document.getElementById('map'), {-->
+          <!--zoom: 16,-->
+          <!--center: new google.maps.LatLng(27.700769, 85.300140),-->
+          <!--mapTypeId: 'roadmap'-->
+        <!--});-->
+
+<!--//variable to hold your endpoint-->
+<!--var coodAddresses = 'https://127.0.0.1:5000/api/coordinates';-->
+<!--//an array to hold your cordinates-->
+<!--var locations = [];-->
+<!--//Using fetch to process the ajax call-->
+
+<!--fetch(coodAddresses)-->
+<!--.then(function(response) {-->
+ <!--return response.text();-->
+ <!--}).then(function(body) {-->
+ <!--var obj = JSON.parse(body);-->
+ <!--var myAdd = {};-->
+ <!--var addresses = obj.coordinates;-->
+ <!--var l = addresses.length;-->
+ <!--for (i = 0; i < 5; i++) {-->
+ <!--myAdd = {-->
+      <!--position: {-->
+          <!--lat: parseFloat(obj.coordinates[i].lat),-->
+          <!--lng: parseFloat(obj.coordinates[i].lng)-->
+                <!--},-->
+          <!--title: obj.coordinates[i].title,-->
+           <!--};-->
+ <!--locations.push(myAdd);-->
+<!--}-->
+<!--locations.forEach(function(feature) {-->
+          <!--var marker = new google.maps.Marker({-->
+            <!--position: feature.position,-->
+            <!--title: feature.title,-->
+            <!--map: map-->
+          <!--});-->
+        <!--});-->
+
+<!--}).catch(function() {-->
+<!--// if the ajax call fails display an error in an info window-->
+                <!--var pos = {-->
+                    <!--lat: lat,-->
+                    <!--lng: lng-->
+                <!--};-->
+                <!--infoWindow.setMap(map);-->
+                <!--infoWindow.setPosition(pos);-->
+                <!--infoWindow.setContent('An error occurred, we are unable to retreive cordinates.');-->
+
+            <!--});-->
+      <!--}-->
+      <!--</script>-->
+   </body>
+</html>

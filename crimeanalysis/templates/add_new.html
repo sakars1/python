@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
-   <body>
-      <h3>Students - Flask SQLAlchemy example</h3>
-      <hr/>
+   <head>
+      <title>Add data</title>
+       <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+   </head>
+   <body>
+   <div class="container">
+
+      <div class="row">
+         <div class="col m8 offset-m2">
+<h3 style="margin-bottom:50px;">Enter crime data</h3>
       {%- for category, message in get_flashed_messages(with_categories = true) %}
          <div class = "alert alert-danger">
             {{ message }}
@@ -11,21 +22,38 @@
       {%- endfor %}
 
       <form action = "{{ request.path }}" method = "post">
-         <label for = "date_occurred">Date Occurred</label><br>
+        <div class="input-field">
+            <label for = "date_occurred">Date Occurred</label><br>
          <input type = "text" id="date_occurred" name = "date_occurred" placeholder = "Enter date of crime" /><br>
-          <label for = "date_reported">Date Reported</label><br>
+        </div>
+         <div class="input-field">
+             <label for = "date_reported">Date Reported</label><br>
          <input type = "text" id="date_reported" name = "date_reported" placeholder = "Enter reported date" /><br>
-         <label for = "time_occurred">Time Of Crime</label><br>
+         </div>
+         <div class="input-field">
+            <label for = "time_occurred">Time Of Crime</label><br>
          <input type = "text"  id="time_occurred" name = "time_occurred" placeholder = "Enter time of crime" /><br>
-         <label for = "crime_type">Type Of Crime</label><br>
+         </div>
+         <div class="input-field">
+             <label for = "crime_type">Type Of Crime</label><br>
          <input type = "text"  id="crime_type" name = "crime_type" placeholder = "Enter type of crime" /><br>
-         <label for = "crime_loc">Crime Location</label><br>
+         </div>
+         <div class="input-field">
+            <label for = "crime_loc">Crime Location</label><br>
          <input type = "text"  id="crime_loc" name = "crime_loc" placeholder = "Enter location of crime" /><br>
-          <label for = "crime_loc_long">Longitude</label><br>
+         </div>
+         <div class="input-field">
+             <label for = "crime_loc_long">Longitude</label><br>
          <input type = "text"  id="crime_loc_long" name = "crime_loc_long" placeholder = "Enter longitude" /><br>
-          <label for = "crime_loc_lat">Latitude</label><br>
+         </div>
+         <div class="input-field">
+             <label for = "crime_loc_lat">Latitude</label><br>
          <input type = "text"  id="crime_loc_lat" name = "crime_loc_lat" placeholder = "Enter latitude" /><br>
-         <input type = "submit" value = "Submit" />
+         </div>
+         <input type = "submit" value = "Submit" class="btn"/>
       </form>
+         </div>
+      </div>
+   </div>
    </body>
 </html>

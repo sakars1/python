@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title></title>
+
+    <meta charset="utf-8" />
+
+    <script type='text/javascript'
+
+            src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap'
+
+            async defer></script>
+
+    <script type="text/javascript">
+
+        function GetMap() {
+            var longitude = new Array();
+            var latitude = new Array();
+            var title = new Array();
+
+            function add_coords(coords){
+                for (var i=0; i<coords.coordinates.length; i++){
+                    longitude[i] = coords.coordinates[i].lng;
+                    latitude[i] = coords.coordinates[i].lat;
+                    title[i] = coords.coordinates[i].title;
+
+                     //add pushpins
+                    var latLon = new Microsoft.Maps.Location(latitude[i], longitude[i]);
+                    var pin = new Microsoft.Maps.Pushpin(latLon);
+
+                    pin.Title = title[i];//usually title of the infobox
+
+                    pinLayer.push(pin); //add pushpin to pinLayer
+                }
+            }
+
+             fetch('http://127.0.0.1:5000/api/coordinates')
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(body) {
+                add_coords(JSON.parse(body))
+                map.entities.push(pinLayer);
+            });
+
+            var total = 0                //number of locations
+
+
+            var pinLayer = new Microsoft.Maps.EntityCollection();
+            var apiKey = "AkEajgOsVZhCIj6Mnz-HQ7sfQqO-AGjsMNTLQujUD0SklvK60Av7JE9TasYCrPmK";
+
+            map = new Microsoft.Maps.Map(document.getElementById("myMap"), {credentials: apiKey});
+
+
+
+
+            map.setView({zoom: 7, center: new Microsoft.Maps.Location(28.3949, 84.1240)});
+
+
+        }
+
+
+    </script>
+
+</head>
+
+<body>
+
+    <div id="myMap" style="position:relative;width:100%;height:500px;"></div>
+
+    <!--<script>-->
+   <!--fetch('http://127.0.0.1:5000/api/coordinates')-->
+  <!--.then(function(response) {-->
+    <!--return response.json();-->
+  <!--})-->
+  <!--.then(function(myJson) {-->
+    <!--console.log(JSON.stringify(myJson));-->
+  <!--});-->
+    <!--</script>-->
+
+</body>
+
+</html>

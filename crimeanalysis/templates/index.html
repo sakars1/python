@@ -3,8 +3,290 @@
 <head>
     <meta charset="UTF-8">
     <title>Crime Analysis</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        body{margin:0;padding:0;background-color:#efefef}canvas{display: block; vertical-align: bottom; } #particles-js{ position:absolute; width: 100%; height: 500px; background-color: #232741;}
+
+        .banner-wrapper{
+            height:500px;
+        }
+        .banner-wrapper .banner-caption{
+            position:absolute;
+            top:40%;
+            left:50%;
+            transform: translate(-50%,-50%);
+            color: #fff;
+        }
+        .banner-wrapper .banner-caption h1{
+            font-size: 35px;
+            font-weight:bold;
+            text-align:center;
+         }
+        .p-50{
+           padding-top:50px;
+           padding-bottom:50px;
+        }
+        .section-header{
+            padding-bottom:30px;
+            text-align:center;
+        }
+        .crime-type-wrapper{
+            display:flex;
+            justify-content:space-between;
+        }
+        .crime-type-wrapper .crime-type{
+            width:19%;
+            box-sizing:border-box;
+            height:200px;
+            box-shadow:0 0 15px 0 rgba(90,90,90,0.3);
+            text-align:center;
+        }
+        .crime-type a{
+            display:block;
+            width:100%;
+            height:100%;
+        }
+        .crime-type .img-wrapper{
+            height:120px;
+            width:120px;
+            overflow:hidden;
+            margin:15px auto;
+        }
+        .crime-type .img-wrapper img{
+            object-fit:cover;
+            height:100%;
+            width:100%;
+        }
+        .container{
+            width:80%;
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome To Crime Analysis</h1>
+    <div class="banner-wrapper">
+        <div id="particles-js"></div>
+        <div class="banner-caption">
+            <h1>Welcome to Crime Analysis and Prediction</h1>
+        </div>
+    </div>
+    <section class="p-50">
+        <div class="container">
+            <div class="row">
+                <div class="col m4">
+                    <div class="input-field">
+                        <select name="" id="crime_year">
+                            <option value="">Select Year</option>
+                            <option value="2019">2019</option>
+                            <option value="2019">2019</option>
+                        </select>
+                        <label for="crime_year">Crime year</label>
+                    </div>
+                     <button class="btn">Analyse by year</button>
+                </div>
+                <div class="col m4">
+                    <div class="input-field">
+                        <select name="" id="crime_type">
+                            <option value="">Select crime type</option>
+                            <option value="murder">Murder</option>
+                            <option value="rape">Rape</option>
+                        </select>
+                        <label for="crime_type">Crime type</label>
+                    </div>
+                    <button class="btn">Analyse by type</button>
+                </div>
+                 <div class="col m4">
+                    <div class="input-field">
+                        <select name="" id="crime_location">
+                            <option value="">Select location</option>
+                            <option value="biratnagar">Biratnagar</option>
+                            <option value="dharan">Dharan</option>
+                        </select>
+                        <label for="crime_location">Location</label>
+                    </div>
+                    <button class="btn">Analyse by location</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section >
+        <div class="container">
+           <div class="section-header">
+               <h4>Crime Types</h4>
+           </div>
+           <div class="crime-type-wrapper">
+               <div class="crime-type">
+                   <a href="#">
+                        <div class="img-wrapper">
+                            <img src="static/img/murder.png" alt="">
+                        </div>
+                        <h6>Murder</h6>
+                   </a>
+               </div>
+               <div class="crime-type">
+                   <a href="#">
+                        <div class="img-wrapper">
+                            <img src="static/img/rape.png" alt="">
+                        </div>
+                       <h6>Rape</h6>
+                   </a>
+               </div>
+               <div class="crime-type">
+                   <a href="#">
+                        <div class="img-wrapper">
+                            <img src="static/img/robbery.png" alt="">
+                        </div>
+                       <h6>Robbery</h6>
+                   </a>
+               </div>
+               <div class="crime-type">
+                   <a href="#">
+                        <div class="img-wrapper">
+                            <img src="static/img/violence.png" alt="">
+                        </div>
+                       <h6>Violence</h6>
+                   </a>
+               </div>
+               <div class="crime-type">
+                   <a href="#">
+                        <div class="img-wrapper">
+                            <img src="static/img/kidnapping.png" alt="">
+                        </div>
+                       <h6>Kidnapping</h6>
+                   </a>
+               </div>
+           </div>
+        </div>
+    </section>
+    {% set labels = ['murder','rape','robbery','violence','kidnapping'] %}
+      {% set crime_counts = [] %}
+      {% for crime_count in crime_by_type %}
+        {% if crime_counts.append(crime_count[1]) %}{% endif %}
+      {% endfor %}
+
+    <section class="p-50">
+        <div class="container">
+            <div class="section-header">
+                <h4>Overall Crime rates by type from 2015-2019</h4>
+            </div>
+            <div class="row">
+                <div class="col m6">
+                    <canvas id="myChart" width="500" height="300"></canvas>
+                </div>
+                <div class="col m6">
+                     <div id="myMap" style="position:relative;width:100%;height:300px;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+       var elems = document.querySelectorAll('select');
+       var instances = M.FormSelect.init(elems);
+     });
+  </script>
+    <script src="http://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {"particles":{"number":{"value":160,"density":{"enable":true,"value_area":800}},"color":{"value":"#ffffff"},"shape":{"type":"circle","stroke":{"width":0,"color":"#000000"},"polygon":{"nb_sides":5},"image":{"src":"img/github.svg","width":100,"height":100}},"opacity":{"value":1,"random":true,"anim":{"enable":true,"speed":1,"opacity_min":0,"sync":false}},"size":{"value":3,"random":true,"anim":{"enable":false,"speed":4,"size_min":0.3,"sync":false}},"line_linked":{"enable":false,"distance":150,"color":"#ffffff","opacity":0.4,"width":1},"move":{"enable":true,"speed":1,"direction":"none","random":true,"straight":false,"out_mode":"out","bounce":false,"attract":{"enable":false,"rotateX":600,"rotateY":600}}},"interactivity":{"detect_on":"canvas","events":{"onhover":{"enable":true,"mode":"bubble"},"onclick":{"enable":true,"mode":"repulse"},"resize":true},"modes":{"grab":{"distance":400,"line_linked":{"opacity":1}},"bubble":{"distance":250,"size":0,"duration":2,"opacity":0,"speed":3},"repulse":{"distance":400,"duration":0.4},"push":{"particles_nb":4},"remove":{"particles_nb":2}}},"retina_detect":true});var count_particles, stats, update; stats = new Stats; stats.setMode(0); stats.domElement.style.position = 'absolute'; stats.domElement.style.left = '0px'; stats.domElement.style.top = '0px'; document.body.appendChild(stats.domElement); count_particles = document.querySelector('.js-count-particles'); update = function() { stats.begin(); stats.end(); if (window.pJSDom[0].pJS.particles && window.pJSDom[0].pJS.particles.array) { count_particles.innerText = window.pJSDom[0].pJS.particles.array.length; } requestAnimationFrame(update); }; requestAnimationFrame(update);;
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.css" integrity="sha256-aa0xaJgmK/X74WM224KMQeNQC2xYKwlAt08oZqjeF0E=" crossorigin="anonymous" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: {{ labels | safe }},
+        datasets: [{
+            label: 'No of crimes by crime types',
+            data: {{ crime_counts }},
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(153, 102, 255, 0.2)',
+                'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)',
+                'rgba(153, 102, 255, 1)',
+                'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+</script>
+ <script type='text/javascript'
+
+            src='http://www.bing.com/api/maps/mapcontrol?callback=GetMap'
+
+            async defer></script>
+
+    <script type="text/javascript">
+
+        function GetMap() {
+            var longitude = new Array();
+            var latitude = new Array();
+            var title = new Array();
+
+            function add_coords(coords){
+                for (var i=0; i<coords.coordinates.length; i++){
+                    longitude[i] = coords.coordinates[i].lng;
+                    latitude[i] = coords.coordinates[i].lat;
+                    title[i] = coords.coordinates[i].title;
+
+                     //add pushpins
+                    var latLon = new Microsoft.Maps.Location(latitude[i], longitude[i]);
+                    var pin = new Microsoft.Maps.Pushpin(latLon);
+
+                    pin.Title = title[i];//usually title of the infobox
+
+                    pinLayer.push(pin); //add pushpin to pinLayer
+                }
+            }
+
+             fetch('http://127.0.0.1:5000/api/coordinates')
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(body) {
+                add_coords(JSON.parse(body))
+                map.entities.push(pinLayer);
+            });
+
+            var total = 0                //number of locations
+
+
+            var pinLayer = new Microsoft.Maps.EntityCollection();
+            var apiKey = "AkEajgOsVZhCIj6Mnz-HQ7sfQqO-AGjsMNTLQujUD0SklvK60Av7JE9TasYCrPmK";
+
+            map = new Microsoft.Maps.Map(document.getElementById("myMap"), {credentials: apiKey});
+
+
+
+
+            map.setView({zoom: 6.4, center: new Microsoft.Maps.Location(28.3949, 84.1240)});
+
+
+        }
+
+
+    </script>
 </body>
 </html>
